@@ -9,14 +9,15 @@ import Result from './components/Result'
 
 
 
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [result, Setresult] = useState('')
 
   return (
     <>
       <Header />
-      <Search />
-      <Result />
+      <Search Setresult={Setresult} />
+      <Result result={result} />
       <Footer />
     </>
   )

@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
 import { geoapi } from '../geoapi'
+import { weatherapi } from '../geoapi'
 
-const search = () => {
+const Search = ({ Setresult }) => {
   const [name, setName] = useState('')
-  const geolocationcCall = async e => {
+
+  const geolocationCall = async e => {
     e.preventDefault()
     try {
-      console.log(name);
-      const response = await fetch(geoapi(name));
-      const result = await response.json();
-      
-      console.log(result);
+      const response = await fetch(geoapi(name))
+      const result = await response.json()
+      // console.log(result);
+
+      if (result[0]) {
+        const response1 = await fetch(weatherapi(result[0].lat, result[0].lon))
+        const result1 = await response.json();
+        Setresult(result1);
+      }
     } catch (error) {
       console.log(error)
     }
@@ -18,22 +24,22 @@ const search = () => {
 
   return (
     <div>
-      <form
-        action=''
-        onSubmit={geolocationcCall}
-        className='flex justify-center gap-2'
-      >
-        <label htmlFor='' className=''>
+      <form onSubmit={geolocationCall} className='flex justify-center gap-2'>
+        <label>
           <p>Enter City Name</p>
-          <input type='text' name='' id='' className='border-2 border-black' onChange={(e)=> setName(e.target.value)} />
+          <input
+            type='text'
+            className='border-2 border-black'
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
         </label>
-        <button type="submit" className='justify-center'>Search</button>
+        <button type='submit' className='justify-center'>
+          Search
+        </button>
       </form>
     </div>
   )
 }
 
-
-
-
-export default search
+export default Search
