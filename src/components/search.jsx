@@ -6,12 +6,16 @@ const search = () => {
   const geolocationcCall = async e => {
     e.preventDefault()
     try {
-      const response = await fetch(geoapi(name))
-      const result = await response.json()
+      console.log(name);
+      const response = await fetch(geoapi(name));
+      const result = await response.json();
+      
+      console.log(result);
     } catch (error) {
       console.log(error)
     }
   }
+
   return (
     <div>
       <form
